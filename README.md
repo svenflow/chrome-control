@@ -1,6 +1,37 @@
 # chrome-control
 
-Control Chrome from the command line via a native messaging extension.
+Browser automation CLI designed for AI agents. Built for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) but works with any LLM or script that can call shell commands.
+
+Every command is a single shell call that returns structured text — no SDK, no library imports, no async/await. This makes it trivial for an AI agent to read pages, click elements, fill forms, and take screenshots by generating shell commands.
+
+```
+┌──────────┐     shell      ┌─────────────────┐     stdio      ┌──────────────┐
+│ AI Agent │───────────────►│ chrome CLI       │───────────────►│ Chrome       │
+│ (Claude) │◄───────────────│ (Unix socket)    │◄───────────────│ (Extension)  │
+└──────────┘   text output  └─────────────────┘   native msg   └──────────────┘
+```
+
+## Why This Exists
+
+Browser automation libraries (Playwright, Selenium) are designed for developers writing code. They're fast but require in-process SDK calls — an AI agent can't use them without writing and executing a Python/JS program for every action.
+
+chrome-control flips this: every operation is a CLI command with text output. An AI agent can:
+
+```bash
+# Read what's on the page
+chrome read 12345              # → ref_1  button  Sign In
+                               #   ref_2  input   Email
+
+# Interact with elements by reference
+chrome type 12345 ref_2 "user@example.com"
+chrome click 12345 ref_1
+
+# Handle CSP-protected sites that block normal automation
+chrome iframe-click 12345 'input[type="password"]'
+chrome insert-text 12345 "password123"
+```
+
+No imports. No boilerplate. Just shell commands an LLM can generate naturally.
 
 ## Architecture
 
