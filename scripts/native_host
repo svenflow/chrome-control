@@ -1,0 +1,2 @@
+#!/bin/bash
+exec /usr/bin/python3 "/Users/sven/.claude/skills/chrome-control/scripts/native_host.py"
