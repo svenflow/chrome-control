@@ -1,2 +1,3 @@
 #!/bin/bash
-exec /usr/bin/python3 "/Users/sven/.claude/skills/chrome-control/scripts/native_host.py"
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec /usr/bin/env python3 "$DIR/native_host.py"

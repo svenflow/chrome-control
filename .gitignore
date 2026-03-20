@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 closed_tabs.log
+.DS_Store
+*.log
+.vscode/
+.idea/
